@@ -4,13 +4,13 @@ cmake_minimum_required(VERSION 2.8)
 
 # include *.h
 INCLUDE_DIRECTORIES(src/)
-INCLUDE_DIRECTORIES(httpserver/)
+INCLUDE_DIRECTORIES(src/httpserver/)
 
 # add src folder
-aux_source_directory(httpserver/ SRC_LIST)
-aux_source_directory(httpserver/http-parser SRC_LIST)
-aux_source_directory(httpserver/json SRC_LIST)
-aux_source_directory(httpserver/simple_log SRC_LIST)
+aux_source_directory(src/httpserver/ SRC_LIST)
+aux_source_directory(src/httpserver/http-parser SRC_LIST)
+aux_source_directory(src/httpserver/json SRC_LIST)
+aux_source_directory(src/httpserver/simple_log SRC_LIST)
 aux_source_directory(. SRC_LIST)
 
 # build flag
