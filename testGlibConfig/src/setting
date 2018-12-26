@@ -1,0 +1,10 @@
+[general]
+name=asd
+class=2
+
+[gt]
+abc=hi
+def=false
+
+[ui]
+toolbar=true
