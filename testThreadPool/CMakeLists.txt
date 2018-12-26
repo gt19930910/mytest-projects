@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.11)
+project(threadpool)
+include_directories(src)
+add_executable(threadpool src/main.c src/threadpool.c src/condition.c)
+target_link_libraries(threadpool -lpthread)
