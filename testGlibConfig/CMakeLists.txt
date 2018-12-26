@@ -19,8 +19,10 @@ add_executable(${PROJECT_NAME} ${SRC_LIST})
 # add folder of libs
 #link_directories("/usr/lib64/")
 
-# add folder of include
-#include_directories(/usr/include/glib-2.0) 
+include_directories(/usr/include/glib-2.0) 
+include_directories(/usr/lib64/glib-2.0/include) 
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} -lglib-2.0)
 
 ##############################################################
 #              others                                        # 
