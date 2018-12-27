@@ -1,4 +1,4 @@
-#include "threadpool.h"
+#include "threadPool.h"
 
 void threadpool_init(threadpool_t *td, int threads)
 {
@@ -52,12 +52,15 @@ void *thread_routine(void *arg)
 			status = condition_timedwait(&td->ready, &abstime);
 			if (status == ETIMEDOUT)
 			{
+				/*如果等待超过两秒没任务就结束这个线程*/
 				timeout = 1;
 				break;
 			}
 		}
 
+		/*此时可用线程减一*/
 		td->idle--;
+		/*处理任务*/
 		if (td->first != NULL)
 		{
 			task_t *t = td->first;
@@ -68,6 +71,7 @@ void *thread_routine(void *arg)
 			condition_lock(&td->ready);
 		}
 
+		/*如果提示退出并且队列里面没任务，就让所有等待的线程直接退出*/
 		if (td->quit && td->first == NULL)
 		{
 			td->counter--;
@@ -77,6 +81,7 @@ void *thread_routine(void *arg)
 			break;
 		}
 
+		/*如果超时了，就当前线程数减1*/
 		if (timeout == 1)
 		{
 			td->counter--;
@@ -98,6 +103,7 @@ void threadpool_add_task(threadpool_t *td, void *(*task)(void *arg), void *arg)
 	newtask->next = NULL;
 
 	condition_lock(&td->ready);
+	/*任务加载*/
 	if (td->first == NULL)
 	{
 		td->first = newtask;
@@ -107,10 +113,13 @@ void threadpool_add_task(threadpool_t *td, void *(*task)(void *arg), void *arg)
 	}
 	td->last = newtask;
 	
-	if (td->idle > 0)
+	if (td->idle > 0){
+		/*如果有空闲就让工作*/
 		condition_signal(&td->ready);
+	}
 	else if (td->counter < td->max_threads)
 	{
+		/*如果没空闲就创建线程*/
 		pthread_t tid;
 		pthread_create(&tid, NULL, thread_routine, td);
 		td->counter++;
