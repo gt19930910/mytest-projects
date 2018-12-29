@@ -1,4 +1,4 @@
-#include "threadPool.h"
+#include "src/threadpool.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -20,7 +20,6 @@ int main(void)
 	/*初始化线程池，10个线程*/
 	threadpool_t pool;
 	threadpool_init(&pool, 10);
-
 	int i;
 	/*给线程池添加十个任务，以函数指针的形式传入*/
 	for (i = 1; i < 10; i++)
