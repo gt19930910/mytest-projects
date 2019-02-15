@@ -1,4 +1,4 @@
-project(test-base64)
+project(test)
 cmake_minimum_required(VERSION 2.8)
 
 
