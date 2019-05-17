@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE log4c SYSTEM "">
+<log4c version="1.2.4">
+ 
+<config>
+<bufsize>0</bufsize>
+<debug level="2"/>
+<nocleanup>0</nocleanup>
+<reread>1</reread>
+</config>
+ 
+<!-- root category -->
+<category name="root" priority="notice"/>
+<category name="mycat" priority="debug" appender="stdout"/>
+<category name="file" priority="debug" appender="test.log"/>
+ 
+<!-- default appenders -->
+<appender name="stdout" type="stream" layout="basic"/>
+<appender name="test.log" type="rollingfile" logdir="/var/log" layout="test-log4c" rollingpolicy="RollingPolicy"/>
+<appender name="stderr" type="stream" layout="dated"/>
+<appender name="syslog" type="syslog" layout="basic"/>
+ 
+<!-- default layouts -->
+<layout name="basic" type="basic"/>
+<layout name="dated" type="dated"/>
+<layout name="test-log4c" type="dated_format"/>
+ 
+<!--sizewin表示达到最大值后新建日志文件  值由maxsize设定，单位Bytes     maxnum为最大文件数目 maxsize=50mb -->
+<rollingpolicy name="RollingPolicy" type="sizewin" maxsize="52428800" maxnum="10" />
+</log4c>
