@@ -66,22 +66,20 @@ void log_message(int priority, const char *file, int line, const char *fun, cons
 {
     const int len_buf = 2048;
     char new_fmt[len_buf];
-    va_list ap;
     int n;
-    if (log_category == NULL) {
+    if (log_category == NULL)
         return;
-    }
 
     n = snprintf(new_fmt, len_buf, "[%s %d %s] ", file, line, fun);
-    if (n <= 0) {
+    if (n <= 0)
         return;
-    }
-
-    n += snprintf(new_fmt + n, len_buf - n, "%s", fmt);
-
+ 
+    va_list ap;
     va_start(ap, fmt);
-    log4c_category_vlog(log_category, priority, new_fmt, ap);
+    vsnprintf(new_fmt, len_buf, fmt, ap);
+
     va_end(ap);
+    log4c_category_log(log_category, priority, new_fmt);
 }
 
 // ===  FUNCTION  ======================================================================
@@ -106,6 +104,6 @@ int test_log_init(void)
         return -1;
     }
 
-    log_category = log4c_category_get("file");
+    log_category = log4c_category_get("mycat");
     return 0;
 }
